@@ -1,0 +1,20 @@
+# Use uma imagem base do Ruby
+FROM ruby:3.2
+
+# Instalação de dependências
+RUN apt-get update && apt-get install -y build-essential
+
+# Configuração do diretório de trabalho
+WORKDIR /app
+
+# Copiar arquivos necessários
+COPY Gemfile* ./
+
+# Instalação das gems
+RUN bundle install
+
+# Copiar o restante do código para a imagem
+COPY . .
+
+# Comando para iniciar os testes
+ENTRYPOINT ["cucumber"]
